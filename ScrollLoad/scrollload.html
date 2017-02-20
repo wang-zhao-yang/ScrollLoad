@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ScrollLoad</title>
+    <script type="text/javascript" src="jquery-1.8.2.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+           var index = 0;
+           function loadData() {
+               $.get("loadcontent.html", function (data) {
+                   $("#content").append(data);
+               }, "html");
+               index++;
+           }
+           loadData();
+           $(window).scroll(function () {
+               if (index > 5) {
+                   $("body").append("加载完成");
+                   $(this).off("scroll");
+               }
+               var isLoad = $(this).scrollTop()+20 >= $(document).height()-$(this).height();
+               if (isLoad) {
+                   loadData();
+               }
+           });
+        });
+    </script>
+</head>
+<body>
+    <h1>滚动加载内容</h1>
+    <div id="content"></div>
+</body>
+</html>
